@@ -119,4 +119,4 @@ const getResponseFromChatGPT = async (msg) => {
     return completion.data.choices[0].message.content;
 }
 
-app.listen(3001, () => { console.log('Server is running on 3001') });
+app.listen(3004, () => { console.log('Server is running on 3001') });
