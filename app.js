@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const multer  = require('multer');
 const csv = require('csvtojson');
 const fs = require('fs');
+require('dotenv').config();
 const { Configuration, OpenAIApi } = require("openai");
 
 app.set('view engine', 'ejs');
@@ -116,8 +117,7 @@ const getResponseFromChatGPT = async (msg) => {
     try {
      
         const configuration = new Configuration({
-            apiKey: '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',
-            // apiKey: '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',
+            apiKey: process.env.API_KEY,
         });
     
         const openai = new OpenAIApi(configuration);
@@ -130,8 +130,10 @@ const getResponseFromChatGPT = async (msg) => {
         return completion.data.choices[0].message.content;
 
     } catch (error) {
-        return error;
+        return {
+            error: error.message
+        };
     }
 }
 
-app.listen(3004, () => { console.log('Server is running on 3004') });
+app.listen(process.env.PORT, () => { console.log(`Server is running on ${process.env.PORT}`) });
