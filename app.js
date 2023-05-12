@@ -2,6 +2,7 @@ const app = require('express')();
 const bodyParser = require('body-parser');
 const multer  = require('multer');
 const csv = require('csvtojson');
+const fs = require('fs');
 const { Configuration, OpenAIApi } = require("openai");
 
 app.set('view engine', 'ejs');
@@ -16,6 +17,8 @@ app.get('/', (req, res) => {
 const upload = multer({ dest: 'uploads/' });
 
 app.post('/uploadCSV', upload.single('csvFile'), async (req, res, next) => {
+    
+    console.log('working...');
 
     let fileName = req.file.filename;
     let filterType = req.body.filterType;
@@ -54,6 +57,8 @@ app.post('/uploadCSV', upload.single('csvFile'), async (req, res, next) => {
         coments = coments.slice(0, coments.lastIndexOf(',')) + "\"";
     };
     let chatGPT = await getResponseFromChatGPT(coments);
+
+    // fs.unlink('');
 
     res.json(chatGPT);
 });
@@ -105,18 +110,24 @@ const filterByCondition = (condition, jsonArray) => {
 
 const getResponseFromChatGPT = async (msg) => {
 
-    const configuration = new Configuration({
-        apiKey: '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',
-    });
-
-    const openai = new OpenAIApi(configuration);
-      
-    const completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: `${msg}`}]
-    });
+    try {
+     
+        const configuration = new Configuration({
+            apiKey: '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',
+        });
     
-    return completion.data.choices[0].message.content;
+        const openai = new OpenAIApi(configuration);
+          
+        const completion = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: `${msg}`}]
+        });
+        
+        return completion.data.choices[0].message.content;
+
+    } catch (error) {
+        return error;
+    }
 }
 
-app.listen(3004, () => { console.log('Server is running on 3001') });
+app.listen(3004, () => { console.log('Server is running on 3004') });
