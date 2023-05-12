@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body style="background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);">
+
+    <div class="container mt-4">
+        <h3>Upload CSV file</h3>
+
+        <form action="/uploadCSV" method="POST" enctype="multipart/form-data">
+
+            <input onchange="onFileUpload()" type="file" accept=".csv" name="csvFile">
+
+            <div class="mt-4" id="selectFilterDiv" style="display: none;">
+                <div class="form-check form-check-inline">
+                    <input onclick="hideCustomFilters()" class="form-check-input" type="radio" name="filterType" id="allBtn" value="All" checked>
+                    <label class="form-check-label" for="allBtn">All</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input onclick="showCustomFilters()" class="form-check-input" type="radio" name="filterType" id="customizeBtn" value="Customize">
+                    <label class="form-check-label" for="customizeBtn">Customize</label>
+                </div>
+            </div>
+
+            <div class="mt-4" id="customizeFilterDiv" style="display: none;">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="filter" id="inlineCheckbox1" value="m">
+                    <label class="form-check-label" for="inlineCheckbox1">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="filter" id="inlineCheckbox2" value="f">
+                    <label class="form-check-label" for="inlineCheckbox2">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="filter" id="inlineCheckbox1" value="18 35">
+                    <label class="form-check-label" for="inlineCheckbox1">Young (18 - 35)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="filter" id="inlineCheckbox2" value="35 55">
+                    <label class="form-check-label" for="inlineCheckbox2">Old (35 - 55)</label>
+                </div>
+            </div>
+            
+            <div class="mt-4" id="submitBtnDiv" style="display: none;">
+                <button class="btn rounded-pill" style="background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%); color: #fff;" type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+    <script>
+
+        const onFileUpload = () => {
+
+            $('#selectFilterDiv').show();
+            $('#submitBtnDiv').show();
+        };
+
+        const showCustomFilters = () => {
+
+            $('#customizeFilterDiv').show();
+        }
+
+        const hideCustomFilters = () => {
+            $('#customizeFilterDiv').hide();
+        }
+
+    </script>
+</body>
+</html>
