@@ -58,7 +58,10 @@ app.post('/uploadCSV', upload.single('csvFile'), async (req, res, next) => {
     };
     let chatGPT = await getResponseFromChatGPT(coments);
 
-    // fs.unlink('');
+    fs.unlink(`./uploads/${fileName}`, err => {
+        if(err) throw err;
+        console.log('file removed!');
+    });
 
     res.json(chatGPT);
 });
@@ -113,7 +116,8 @@ const getResponseFromChatGPT = async (msg) => {
     try {
      
         const configuration = new Configuration({
-            apiKey: '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',
+            apiKey: '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',
+            // apiKey: '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',
         });
     
         const openai = new OpenAIApi(configuration);
